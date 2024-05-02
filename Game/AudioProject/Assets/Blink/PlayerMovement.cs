@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     float turnSmoothVelocity;
 
     public Transform cam;
-
+    public Animator animator;
     private void Start()
     {
         cc = GetComponent<CharacterController>();
@@ -31,9 +31,14 @@ public class PlayerMovement : MonoBehaviour
         float vertical = -Input.GetAxisRaw("Vertical");
 
         Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
+        animator.SetBool("IsIdle", true);
+        animator.SetBool("IsRunning", false);
 
         if (direction.magnitude >= 0.1f)
         {
+            animator.SetBool("IsIdle", false);
+            animator.SetBool("IsRunning", true);
+
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
 

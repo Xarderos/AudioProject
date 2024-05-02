@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.29604352, g: 0.15762219, b: 0.122506715, a: 1}
+  m_IndirectSpecularColor: {r: 0.29604295, g: 0.15762189, b: 0.12250651, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -13335,6 +13335,7 @@ MonoBehaviour:
     m_Bits: 0
   turnSmoothTime: 0.1
   cam: {fileID: 504324473}
+  animator: {fileID: 1837900367}
 --- !u!143 &1837900366
 CharacterController:
   m_ObjectHideFlags: 0
@@ -13361,6 +13362,11 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!95 &1837900367 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4957605393579145647, guid: 4f46098734d87e24490aef9267915ad2, type: 3}
+  m_PrefabInstance: {fileID: 1326960016}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1839033694
 GameObject:
   m_ObjectHideFlags: 0
