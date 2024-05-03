@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     public AudioClip[] audioClips;
     bool isWood;
     bool isGround = true;
+    bool soundPlayed = false;
+    bool soundPlaying = false;
     void Start()
     {
         isGround = true;
@@ -71,6 +73,7 @@ public class PlayerController : MonoBehaviour
         {
             isGround = true;
         }
+
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -79,6 +82,12 @@ public class PlayerController : MonoBehaviour
             audioSource.clip = audioClips[2];
             audioSource.Play();
 
+        }
+        if (other.tag == "Boss" && !soundPlayed) 
+        {
+            audioSource.clip = audioClips[3];
+            audioSource.Play();
+            soundPlayed = true; 
         }
     }
 
