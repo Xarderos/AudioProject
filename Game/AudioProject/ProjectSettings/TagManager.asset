@@ -9,6 +9,11 @@ TagManager:
   - Bush
   - Boss
   - Wind
+  - Indoor
+  - Tension
+  - Party
+  - Fight
+  - Birds
   layers:
   - Default
   - TransparentFX
