@@ -1,44 +1,85 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Movement : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed = 5f; // Adjust this to control the speed of the player
-    public float rotationSpeed = 100f; // Adjust this to control the rotation speed of the player
-    public Animator animator; // Reference to the Animator component
+    public float rotationSpeed = 100f;
+    public float moveSpeed = 5f;
+    private Rigidbody rb;
+    public Animator animator;
+    public AudioSource audioSource;
+    public AudioClip[] audioClips;
+    bool isWood;
+    bool isGround = true;
+    void Start()
+    {
+        isGround = true;
+        rb = GetComponent<Rigidbody>();
+        // Assuming the camera is a child of the player object
+    }
 
     void Update()
     {
-        // Get input from the player
-        float horizontalInput = Input.GetAxis("Horizontal");
+        // Rotation
+        float rotationInput = Input.GetAxis("Horizontal");
+        transform.Rotate(Vector3.up, rotationInput * rotationSpeed * Time.deltaTime);
+        
+        // Movement
         float verticalInput = Input.GetAxis("Vertical");
-
-        // Calculate movement direction
-        Vector3 movement = new Vector3(horizontalInput, 0f, verticalInput) * moveSpeed * Time.deltaTime;
-
-        // Apply movement to the player
-        transform.Translate(movement);
-
-        // Check if the player is moving
-        if (movement.magnitude > 0)
+        if(verticalInput != 0 && audioSource.isPlaying == false)
         {
-            // Player is moving, set animation parameters accordingly
+            audioSource.Play();
+            if (isWood)
+            {
+                audioSource.clip = audioClips[1];
+                isWood = false;
+            }
+            else {
+                audioSource.clip = audioClips[0];
+            }
+        }
+        if (verticalInput > 0)
+        {
             animator.SetBool("IsIdle", false);
             animator.SetBool("IsRunning", true);
-
-            // Rotate the player slightly when moving left or right
-            if (horizontalInput != 0)
-            {
-                float rotationAmount = horizontalInput * rotationSpeed * Time.deltaTime;
-                transform.Rotate(Vector3.up, rotationAmount);
-            }
+        }
+        else if (verticalInput < 0)
+        {
+            animator.SetBool("IsIdle", false);
+            animator.SetBool("IsBackward", true);
         }
         else
         {
-            // Player is not moving, set animation parameters accordingly
             animator.SetBool("IsIdle", true);
             animator.SetBool("IsRunning", false);
+            animator.SetBool("IsBackward", false);
+
+        }
+        Vector3 movement = rb.transform.forward * verticalInput * moveSpeed * Time.deltaTime;
+        
+        transform.position += movement;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.tag == "Wood")
+        {
+            isWood = true;
+            isGround = false;
+
+        }
+        if (collision.collider.tag == "Ground")
+        {
+            isGround = true;
         }
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Bush")
+        {
+            audioSource.clip = audioClips[2];
+            audioSource.Play();
+
+        }
+    }
+
 }
