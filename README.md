@@ -1,5 +1,9 @@
 # AudioProject
-## STEP SOUNDS: WOOD-BUSHES-DIRT
+## STEP SOUNDS:
+	-WOOD
+ 	-BUSHES
+  	-DIRT
+ 
 ## SFX LIST:
 	-RING DROPS
 	-TORCHES 
